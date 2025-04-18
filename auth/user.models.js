@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const { boolean } = require("zod");
 
 const userSchema = new mongoose.Schema({
+  fullName: {
+    type: String,
+    trim: true,
+  },
   firstName: {
     type: String,
     trim: true,
@@ -13,19 +17,14 @@ const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
   },
-  userType: {
-    type: String,
-    enum: ["admin", "user"],
-    default: "user",
-  },
   email: {
     type: String,
     required: true,
     unique: true,
     lowercase: true,
   },
-  password: {
-    type: String,
+  email_verified: {
+    type: Boolean
   },
   profileId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -42,9 +41,5 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Number, default: Date.now },
   updatedAt: Number,
 });
-
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
-};
 
 module.exports = mongoose.model("User-qrmanagement", userSchema);
