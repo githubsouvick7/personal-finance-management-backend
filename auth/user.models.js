@@ -42,4 +42,4 @@ const userSchema = new mongoose.Schema({
   updatedAt: Number,
 });
 
-module.exports = mongoose.model("User-qrmanagement", userSchema);
+module.exports = mongoose.model("user", userSchema);
